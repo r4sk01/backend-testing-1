@@ -13,10 +13,33 @@ describe('PostsService', () => {
   });
 
   it('should add a new post', () => {
-    // реализуйте тест-кейс
+    // Create New Post
+    const createdPost = postsService.create(post);
+
+    // Check Post Fields
+    expect(createdPost).toBeDefined();
+    expect(createdPost.id).toBeDefined();
+    expect(createdPost.id).toBe('2');
+    expect(createdPost.text).toBe(post.text);
+    expect(createdPost.date).toBeDefined();
+
+    // Date has Valid Format
+    expect(() => new Date(createdPost.date)).not.toThrow();
   });
 
   it('should find a post', () => {
-    // реализуйте тест-кейс
+    // Create New Post
+    const createdPost = postsService.create(post);
+
+    // Find Post by ID
+    const foundPost = postsService.find(createdPost.id);
+
+    // Check that found === created
+    expect(foundPost).toBeDefined();
+    expect(foundPost).toEqual(createdPost);
+
+    // Check that Search With Bad ID returns Undefined
+    const nonExistentPost = postsService.find('999');
+    expect(nonExistentPost).toBeUndefined();
   });
 });
