@@ -25,6 +25,10 @@ describe('PostsService', () => {
 
     // Date has Valid Format
     expect(() => new Date(createdPost.date)).not.toThrow();
+
+    const foundPost = postsService.find(createdPost.id);
+    expect(foundPost).toBeDefined();
+    expect(foundPost).toEqual(createdPost);
   });
 
   it('should find a post', () => {
@@ -36,7 +40,13 @@ describe('PostsService', () => {
 
     // Check that found === created
     expect(foundPost).toBeDefined();
-    expect(foundPost).toEqual(createdPost);
+
+    if (foundPost) {
+      expect(foundPost).toEqual(createdPost);
+      expect(foundPost.id).toBe(createdPost.id);
+      expect(foundPost.text).toBe(createdPost.text);
+      expect(foundPost.date).toBe(createdPost.date);
+    }
 
     // Check that Search With Bad ID returns Undefined
     const nonExistentPost = postsService.find('999');
